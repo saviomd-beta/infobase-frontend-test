@@ -1,0 +1,29 @@
+{
+  "name": "infobase-frontend-test",
+  "version": "1.0.0",
+  "description": "??",
+  "author": "Sávio Mendes",
+  "license": "UNLICENSED",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/saviomd-beta/infobase-frontend-test"
+  },
+  "homepage": "https://saviomd-beta/github.io/infobase-frontend-test",
+  "dependencies": {
+    "bootstrap": "^4.0.0",
+    "prop-types": "^15.6.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "^1.1.1"
+  },
+  "scripts": {
+    "postinstall": "cp node_modules/bootstrap/dist/css/bootstrap.min.css src/css/",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "postbuild": "rm -r docs && mv build docs",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
