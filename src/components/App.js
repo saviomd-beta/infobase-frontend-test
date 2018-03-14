@@ -1,6 +1,8 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
+import ContactCreate from './ContactCreate';
+import ContactDetails from './ContactDetails';
 import ContactList from './ContactList';
 import Footer from './Footer';
 import Header from './Header';
@@ -49,6 +51,17 @@ class App extends React.Component {
 						contactList={this.state.contactList}
 						contactListError={this.state.contactListError}
 						contactListLoading={this.state.contactListLoading}
+					/>} />
+					<Route path="/create" exact render={() => <ContactCreate
+						contactListSize={this.state.contactList.length}
+						contactListError={this.state.contactListError}
+						contactListLoading={this.state.contactListLoading}
+					/>} />
+					<Route path="/:contactId" exact render={({ match }) => <ContactDetails
+						contactList={this.state.contactList}
+						contactListError={this.state.contactListError}
+						contactListLoading={this.state.contactListLoading}
+						match={match}
 					/>} />
 					<Route component={NotFound} />
 				</Switch>

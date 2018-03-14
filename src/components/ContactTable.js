@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const propTypes = {
 	contactList: PropTypes.arrayOf(PropTypes.object).isRequired
@@ -24,7 +25,7 @@ class ContactTable extends React.Component {
 							<td>{contact.canal}</td>
 							<td>{contact.valor}</td>
 							<td className="text-right">
-								<button className="btn btn-secondary btn-sm">Editar</button>
+								<Link className="btn btn-secondary btn-sm" to={`/${contact.id}`}>Editar</Link>
 							</td>
 						</tr>
 					)}

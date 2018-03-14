@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import ContactTable from './ContactTable';
 
@@ -24,7 +25,14 @@ class ContactList extends React.Component {
 		}
 		return (
 			<div>
-				<h1 className="h3">Contatos</h1>
+				<div className="row">
+					<div className="col">
+						<h1 className="h3">Contatos</h1>
+					</div>
+					<div className="col-auto">
+						<Link className="btn btn-primary btn-sm" to="/create">Criar</Link>
+					</div>
+				</div>
 				{html}
 			</div>
 		)
