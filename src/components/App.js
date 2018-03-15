@@ -25,6 +25,7 @@ class App extends React.Component {
 			contactListLoading: false
 		}
 		this.getContactData = this.getContactData.bind(this);
+		this.handleContactFormControlChange = this.handleContactFormControlChange.bind(this);
 	}
 	getContactData(props) {
 		if (this.state.contact.id === 0) {
@@ -38,6 +39,17 @@ class App extends React.Component {
 				});
 			}
 		}
+	}
+	handleContactFormControlChange (event) {
+		const target = event.target;
+		const value = target.type === 'checkbox' ? target.checked : target.value;
+		const id = target.id;
+		this.setState(prevState => ({
+			contact: {
+				...prevState.contact,
+				[id]: value
+			}
+		}));
 	}
 	componentDidMount () {
 		this.setState({
@@ -75,11 +87,13 @@ class App extends React.Component {
 					<Route path="/create" exact render={() => <ContactForm
 						action="create"
 						contact={this.state.contact}
+						handleContactFormControlChange={this.handleContactFormControlChange}
 					/>} />
 					<Route path="/:contactId" exact render={({ match }) => <ContactForm
 						action="update"
 						contact={this.state.contact}
 						getContactData={this.getContactData}
+						handleContactFormControlChange={this.handleContactFormControlChange}
 						match={match}
 					/>} />
 					<Route component={NotFound} />
