@@ -42,6 +42,19 @@ class App extends React.Component {
 			this.props.history.push('/');
 		});
 	}
+	deleteContact = contactId => {
+		if (window.confirm('Deseja realmente excluir esse contato?')) {
+			let contactList = [...this.state.contactList];
+			contactList = contactList.filter(item => {
+				return item.id !== contactId
+			})
+			this.setState({
+				contactList
+			}, function () {
+				this.props.history.push('/');
+			});
+		}
+	}
 	componentDidMount () {
 		this.setState({
 			contactListLoading: true
@@ -85,6 +98,7 @@ class App extends React.Component {
 						actionName="update"
 						contact={this.state.contact}
 						contactList={this.state.contactList}
+						deleteContact={this.deleteContact}
 						match={match}
 					/>} />
 					<Route component={NotFound} />

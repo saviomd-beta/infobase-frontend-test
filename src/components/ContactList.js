@@ -13,27 +13,34 @@ const propTypes = {
 class ContactList extends React.Component {
 	render () {
 		const contactListToRender = this.props.contactList;
-		let html = '';
+		let htmlContactCount = '';
+		let htmlContactList = '';
+		if (contactListToRender.length) {
+			htmlContactCount = <span className="ml-1 small">({this.props.contactList.length})</span>;
+		}
 		if (this.props.contactListLoading) {
-			html = <div className="text-center">Carregando...</div>;
+			htmlContactList = <div className="text-center">Carregando...</div>;
 		} else if (this.props.contactListError) {
-			html = <div className="text-center">Erro :(</div>;
+			htmlContactList = <div className="text-center">Erro :(</div>;
 		} else if (contactListToRender.length) {
-			html = <ContactTable contactList={contactListToRender} />;
+			htmlContactList = <ContactTable contactList={contactListToRender} />;
 		} else {
-			html = <div className="text-center">Nenhum contato para exibição</div>;
+			htmlContactList = <div className="text-center">Nenhum contato para exibição</div>;
 		}
 		return (
 			<div>
 				<div className="row">
 					<div className="col">
-						<h1 className="h3">Contatos</h1>
+						<h1 className="h3">
+							Contatos
+							{htmlContactCount}
+						</h1>
 					</div>
 					<div className="col-auto">
 						<Link className="btn btn-primary btn-sm" to="/create">Criar</Link>
 					</div>
 				</div>
-				{html}
+				{htmlContactList}
 			</div>
 		)
 	}

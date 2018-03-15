@@ -27,6 +27,7 @@ class ContactForm extends React.Component {
 		}
 		this.getContactData = this.getContactData.bind(this);
 		this.handleControlChange = this.handleControlChange.bind(this);
+		this.handleDeleteClick = this.handleDeleteClick.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 	getContactData(props) {
@@ -52,6 +53,9 @@ class ContactForm extends React.Component {
 				[id]: value
 			}
 		}));
+	}
+	handleDeleteClick () {
+		this.props.deleteContact(this.state.contact.id);
 	}
 	handleSubmit (event) {
 		event.preventDefault();
@@ -82,7 +86,7 @@ class ContactForm extends React.Component {
 			htmlFormButtons = (
 				<React.Fragment>
 					<li className="list-inline-item">
-						<button className="btn btn-outline-danger">Excluir</button>
+						<button className="btn btn-outline-danger" type="button" onClick={this.handleDeleteClick}>Excluir</button>
 					</li>
 					<li className="list-inline-item">
 						<button className="btn btn-primary" type="submit">Atualizar</button>
@@ -91,7 +95,7 @@ class ContactForm extends React.Component {
 			);
 		}
 		return (
-			<form className="row justify-content-center" onSubmit={(event) => this.handleSubmit(event)}>
+			<form className="row justify-content-center" onSubmit={event => this.handleSubmit(event)}>
 				<div className="col-12 col-sm-8 col-md-6">
 					<h1 className="h3">{formTitle}</h1>
 					<div className="form-group">
