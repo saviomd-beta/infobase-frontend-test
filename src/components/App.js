@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 
 import ContactForm from './ContactForm';
 import ContactList from './ContactList';
@@ -13,43 +13,34 @@ class App extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			contact: {
-				canal: '',
-				id: 0,
-				nome: '',
-				obs: '',
-				valor: ''
-			},
 			contactList: [],
 			contactListError: false,
 			contactListLoading: false
 		}
-		this.getContactData = this.getContactData.bind(this);
-		this.handleContactFormControlChange = this.handleContactFormControlChange.bind(this);
 	}
-	getContactData(props) {
-		if (this.state.contact.id === 0) {
-			const contactId = parseInt(props.match.params.contactId, 10);
-			const contact = this.state.contactList.find((obj) => {
-				return obj.id === contactId;
-			});
-			if (typeof contact !== 'undefined') {
-				this.setState({
-					contact
-				});
-			}
-		}
-	}
-	handleContactFormControlChange (event) {
-		const target = event.target;
-		const value = target.type === 'checkbox' ? target.checked : target.value;
-		const id = target.id;
+	createContact = contact => {
+		const lastContact = this.state.contactList[this.state.contactList.length - 1];
+		contact.id = lastContact.id + 1;
 		this.setState(prevState => ({
-			contact: {
-				...prevState.contact,
-				[id]: value
-			}
-		}));
+			contactList: [
+				...prevState.contactList,
+				contact
+			]
+		}), function () {
+			this.props.history.push('/');
+		});
+	}
+	updateContact = contact => {
+		let contactList = [...this.state.contactList];
+		const index = contactList.findIndex((obj) => {
+			return obj.id === contact.id;
+		});
+		contactList[index] = contact;
+		this.setState({
+			contactList
+		}, function () {
+			this.props.history.push('/');
+		});
 	}
 	componentDidMount () {
 		this.setState({
@@ -85,15 +76,15 @@ class App extends React.Component {
 						contactListLoading={this.state.contactListLoading}
 					/>} />
 					<Route path="/create" exact render={() => <ContactForm
-						action="create"
+						actionFunction={this.createContact}
+						actionName="create"
 						contact={this.state.contact}
-						handleContactFormControlChange={this.handleContactFormControlChange}
 					/>} />
 					<Route path="/:contactId" exact render={({ match }) => <ContactForm
-						action="update"
+						actionFunction={this.updateContact}
+						actionName="update"
 						contact={this.state.contact}
-						getContactData={this.getContactData}
-						handleContactFormControlChange={this.handleContactFormControlChange}
+						contactList={this.state.contactList}
 						match={match}
 					/>} />
 					<Route component={NotFound} />
@@ -104,4 +95,4 @@ class App extends React.Component {
 	}
 }
 
-export default App;
+export default withRouter(App);
