@@ -1,8 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import ContactCreate from './ContactCreate';
-import ContactDetails from './ContactDetails';
+import ContactForm from './ContactForm';
 import ContactList from './ContactList';
 import Footer from './Footer';
 import Header from './Header';
@@ -14,9 +13,30 @@ class App extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
+			contact: {
+				canal: '',
+				id: 0,
+				nome: '',
+				obs: '',
+				valor: ''
+			},
 			contactList: [],
 			contactListError: false,
 			contactListLoading: false
+		}
+		this.getContactData = this.getContactData.bind(this);
+	}
+	getContactData(props) {
+		if (this.state.contact.id === 0) {
+			const contactId = parseInt(props.match.params.contactId, 10);
+			const contact = this.state.contactList.find((obj) => {
+				return obj.id === contactId;
+			});
+			if (typeof contact !== 'undefined') {
+				this.setState({
+					contact
+				});
+			}
 		}
 	}
 	componentDidMount () {
@@ -52,15 +72,14 @@ class App extends React.Component {
 						contactListError={this.state.contactListError}
 						contactListLoading={this.state.contactListLoading}
 					/>} />
-					<Route path="/create" exact render={() => <ContactCreate
-						contactListSize={this.state.contactList.length}
-						contactListError={this.state.contactListError}
-						contactListLoading={this.state.contactListLoading}
+					<Route path="/create" exact render={() => <ContactForm
+						action="create"
+						contact={this.state.contact}
 					/>} />
-					<Route path="/:contactId" exact render={({ match }) => <ContactDetails
-						contactList={this.state.contactList}
-						contactListError={this.state.contactListError}
-						contactListLoading={this.state.contactListLoading}
+					<Route path="/:contactId" exact render={({ match }) => <ContactForm
+						action="update"
+						contact={this.state.contact}
+						getContactData={this.getContactData}
 						match={match}
 					/>} />
 					<Route component={NotFound} />
