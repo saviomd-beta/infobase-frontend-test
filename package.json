@@ -9,7 +9,7 @@
     "type": "git",
     "url": "https://github.com/saviomd-beta/infobase-frontend-test"
   },
-  "homepage": "https://saviomd-beta/github.io/infobase-frontend-test",
+  "homepage": "https://saviomd-beta.github.io/infobase-frontend-test",
   "dependencies": {
     "bootstrap": "^4.0.0",
     "prop-types": "^15.6.0",
