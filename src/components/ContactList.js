@@ -3,20 +3,46 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import ContactTable from './ContactTable';
+import Pagination from './Pagination';
 
 const propTypes = {
 	contactList: PropTypes.arrayOf(PropTypes.object).isRequired,
 	contactListError: PropTypes.bool.isRequired,
-	contactListLoading: PropTypes.bool.isRequired
+	contactListLoading: PropTypes.bool.isRequired,
+	match: PropTypes.shape({
+		params: PropTypes.shape({
+			page: PropTypes.string,
+			size: PropTypes.string
+		})
+	})
 }
 
 class ContactList extends React.Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			page: parseInt(props.match.params.page, 10) || 1,
+			size: parseInt(props.match.params.size, 10) || 10
+		}
+	}
+	componentDidUpdate(prevProps, prevState) {
+		if (this.props.match.params !== prevProps.match.params) {
+			this.setState({
+				page: parseInt(this.props.match.params.page, 10) || 1,
+				size: parseInt(this.props.match.params.size, 10) || 10
+			});
+		}
+	}
 	render () {
-		const contactListToRender = this.props.contactList;
+		const begin = (this.state.page - 1) * this.state.size;
+		const end = begin + this.state.size;
+		const contactListToRender = this.props.contactList.slice(begin, end);
 		let htmlContactCount = '';
 		let htmlContactList = '';
+		let htmlPagination = '';
 		if (contactListToRender.length) {
 			htmlContactCount = <span className="ml-1 small">({this.props.contactList.length})</span>;
+			htmlPagination = <Pagination listLength={this.props.contactList.length} pathBase="" size={this.state.size} />;
 		}
 		if (this.props.contactListLoading) {
 			htmlContactList = <div className="text-center">Carregando...</div>;
@@ -41,6 +67,7 @@ class ContactList extends React.Component {
 					</div>
 				</div>
 				{htmlContactList}
+				{htmlPagination}
 			</div>
 		)
 	}

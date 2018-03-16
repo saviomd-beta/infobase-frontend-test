@@ -83,22 +83,23 @@ class App extends React.Component {
 			<div className="container-fluid">
 				<Header />
 				<Switch>
-					<Route path="/" exact render={() => <ContactList
-						contactList={this.state.contactList}
-						contactListError={this.state.contactListError}
-						contactListLoading={this.state.contactListLoading}
-					/>} />
 					<Route path="/create" exact render={() => <ContactForm
 						actionFunction={this.createContact}
 						actionName="create"
 						contact={this.state.contact}
 					/>} />
-					<Route path="/:contactId" exact render={({ match }) => <ContactForm
+					<Route path="/view/:contactId" exact render={({ match }) => <ContactForm
 						actionFunction={this.updateContact}
 						actionName="update"
 						contact={this.state.contact}
 						contactList={this.state.contactList}
 						deleteContact={this.deleteContact}
+						match={match}
+					/>} />
+					<Route path="/:page?/:size?" exact render={({ match }) => <ContactList
+						contactList={this.state.contactList}
+						contactListError={this.state.contactListError}
+						contactListLoading={this.state.contactListLoading}
 						match={match}
 					/>} />
 					<Route component={NotFound} />

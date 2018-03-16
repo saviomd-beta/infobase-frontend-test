@@ -25,7 +25,7 @@ class ContactTable extends React.Component {
 							<td>{contact.canal}</td>
 							<td>{contact.valor}</td>
 							<td className="text-right">
-								<Link className="btn btn-secondary btn-sm" to={`/${contact.id}`}>Editar</Link>
+								<Link className="btn btn-secondary btn-sm" to={`/view/${contact.id}`}>Editar</Link>
 							</td>
 						</tr>
 					)}
