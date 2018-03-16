@@ -59,7 +59,7 @@ class App extends React.Component {
 		this.setState({
 			contactListLoading: true
 		});
-		fetch('/data/MOCK_DATA.json').then((response) => {
+		fetch('https://saviomd-beta.github.io/infobase-frontend-test/data/MOCK_DATA.json').then((response) => {
 			if (!response.ok) {
 				throw Error(response.statusText);
 			}
