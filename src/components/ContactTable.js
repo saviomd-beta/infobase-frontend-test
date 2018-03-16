@@ -9,28 +9,30 @@ const propTypes = {
 class ContactTable extends React.Component {
 	render () {
 		return (
-			<table className="table table-striped">
-				<thead>
-					<tr>
-						<th>Nome</th>
-						<th>Canal</th>
-						<th>Valor</th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					{this.props.contactList.map((contact) =>
-						<tr key={contact.id}>
-							<td>{contact.nome}</td>
-							<td>{contact.canal}</td>
-							<td>{contact.valor}</td>
-							<td className="text-right">
-								<Link className="btn btn-secondary btn-sm" to={`/view/${contact.id}`}>Editar</Link>
-							</td>
+			<div className="table-responsive">
+				<table className="table table-striped">
+					<thead>
+						<tr>
+							<th width="40%">Nome</th>
+							<th width="10%">Canal</th>
+							<th width="40%">Valor</th>
+							<th width="10%"></th>
 						</tr>
-					)}
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						{this.props.contactList.map((contact) =>
+							<tr key={contact.id}>
+								<td>{contact.nome}</td>
+								<td>{contact.canal}</td>
+								<td>{contact.valor}</td>
+								<td className="text-right">
+									<Link className="btn btn-secondary btn-sm" to={`/view/${contact.id}`}>Editar</Link>
+								</td>
+							</tr>
+						)}
+					</tbody>
+				</table>
+			</div>
 		)
 	}
 }

@@ -42,7 +42,7 @@ class ContactList extends React.Component {
 		let htmlPagination = '';
 		if (contactListToRender.length) {
 			htmlContactCount = <span className="ml-1 small">({this.props.contactList.length})</span>;
-			htmlPagination = <Pagination listLength={this.props.contactList.length} pathBase="" size={this.state.size} />;
+			htmlPagination = <Pagination currentPage={this.state.page} listLength={this.props.contactList.length} pathBase="" size={this.state.size} />;
 		}
 		if (this.props.contactListLoading) {
 			htmlContactList = <div className="text-center">Carregando...</div>;
